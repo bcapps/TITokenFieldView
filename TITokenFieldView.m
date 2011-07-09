@@ -191,19 +191,7 @@ CGFloat const kSeparatorHeight = 1;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	
-	// Hide the UITableView and shadow, then resize if there are no matches.
 	
-	if ([delegate respondsToSelector:@selector(tokenField:didFinishSearch:)]){
-		[delegate tokenField:tokenField didFinishSearch:resultsArray];
-	}
-	
-	BOOL hideTable = !resultsArray.count;
-	[resultsTable setHidden:hideTable];
-	[textFieldShadow setHidden:hideTable];
-	[tokenField scrollForEdit:!hideTable];
-	
-	UIColor * separatorColor = hideTable ? [UIColor colorWithWhite:0.7 alpha:1] : [UIColor colorWithRed:150/255 green:150/255 blue:150/255 alpha:0.4];
-	[separator setBackgroundColor:separatorColor];
 	
 	return resultsArray.count;
 	
@@ -455,6 +443,20 @@ CGFloat const kSeparatorHeight = 1;
 	
 	[resultsArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	[resultsTable reloadData];
+	
+	// Hide the UITableView and shadow, then resize if there are no matches.
+	
+	if ([delegate respondsToSelector:@selector(tokenField:didFinishSearch:)]){
+		[delegate tokenField:tokenField didFinishSearch:resultsArray];
+	}
+	
+	BOOL hideTable = !resultsArray.count;
+	[resultsTable setHidden:hideTable];
+	[textFieldShadow setHidden:hideTable];
+	[tokenField scrollForEdit:!hideTable];
+	
+	UIColor * separatorColor = hideTable ? [UIColor colorWithWhite:0.7 alpha:1] : [UIColor colorWithRed:150/255 green:150/255 blue:150/255 alpha:0.4];
+	[separator setBackgroundColor:separatorColor];
 }
 
 - (NSString *)description {
@@ -684,7 +686,7 @@ typedef void (^AnimationBlock)();
 								   addButton.frame.size.width, 
 								   addButton.frame.size.height)];
 	
-	if (scrollToTop) [parentView setContentOffset:CGPointMake(0, 0) animated:YES];
+	//if (scrollToTop) [parentView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 - (void)scrollForEdit:(BOOL)shouldMove {
